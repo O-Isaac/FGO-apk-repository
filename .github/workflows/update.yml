@@ -25,7 +25,7 @@ jobs:
 
       - name: Download JP 32 & 64 Bits
         run: |
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
+          python googleplay-api/downloader.py -e magireco329@gmail.com -p pnnjqvnzvklptwet -r JP -t 32
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
 
       - name: Download NA 32 Bits
