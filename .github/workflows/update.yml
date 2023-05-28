@@ -23,19 +23,20 @@ jobs:
         run: pip install -r googleplay-api/requirements.txt
 
       - name: Build GooglePlay-Api
-        run: python googleplay-api/setup.py build
-        
-      - name: Download JP 32 Bits
-        run: python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
-        
-      - name: Download JP 64 Bits
-        run: python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
+        run: |
+          cd googleplay-api
+          python setup.py build
+          cd ..
+
+      - name: Download JP 32 & 64 Bits
+        run: |
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
 
       - name: Download NA 32 Bits
-        run: python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
-
-      - name: Download NA 64 Bits
-        run: python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
+        run: | 
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
 
       - name: Commit & push changes to branch NA
         uses: actions-js/push@master
