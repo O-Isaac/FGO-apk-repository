@@ -37,5 +37,5 @@ jobs:
         uses: actions-js/push@master
         with:
           force: true
-          branch: "master"
+          branch: "apk"
           github_token: ${{ secrets.TOKEN_REPO }}
