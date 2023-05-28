@@ -33,9 +33,12 @@ jobs:
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
 
-      - name: Commit & push changes to branch NA
-        uses: actions-js/push@master
+      - name: Upload Apk as artifacts
+        uses: actions/upload-artifact@v2
         with:
-          force: true
-          branch: "apk"
-          github_token: ${{ secrets.TOKEN_REPO }}
+          name: apks
+          path: |
+            com.aniplex.fategrandorder.arm64-v8a.apk
+            com.aniplex.fategrandorder.armeabi-v7a.apk
+            com.aniplex.fategrandorder.en.arm64-v8a.apk
+            com.aniplex.fategrandorder.en.armeabi-v7a.apk
