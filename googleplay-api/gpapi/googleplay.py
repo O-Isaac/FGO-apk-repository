@@ -250,6 +250,9 @@ class GooglePlayAPI(object):
                                  data=params,
                                  verify=ssl_verify,
                                  proxies=self.proxies_config)
+                
+            print(response.request.headers.get('User-Agent'))
+                
             data = response.text.split()
             params = {}
             for d in data:
