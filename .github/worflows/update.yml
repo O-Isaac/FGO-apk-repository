@@ -1,0 +1,40 @@
+name: Downloading Latest APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10.4]
+
+    steps:
+      - name: Gettings files from Repo
+        uses: actions/checkout@v2
+
+      - name: Install Pre Requeriments
+        run: bash depencencies.bash
+      
+      - name: Install Requeriments
+        run: pip install -r googleplay-api/requirements.txt
+
+      - name: Download JP 32 Bits
+        run: python googleplay-api\downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
+        
+      - name: Download JP 64 Bits
+        run: python googleplay-api\downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
+
+      - name: Download NA 32 Bits
+        run: python googleplay-api\downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
+
+      - name: Download NA 64 Bits
+        run: python googleplay-api\downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
+
+      - name: Commit & push changes to branch NA
+        uses: actions-js/push@master
+        with:
+          force: true
+          branch: "JP"
+          github_token: ${{ secrets.TOKEN_REPO }}
