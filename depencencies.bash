@@ -11,7 +11,8 @@ rm protoc-3.15.8-linux-x86_64.zip
 echo [+] Installing protobuf
 pip install protobuf
 
-ls
+ls googleplay-api
+
 
 echo [+] Installing deps
 pip install -r googleplay-api/requirements.txt
