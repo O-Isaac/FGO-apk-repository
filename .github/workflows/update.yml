@@ -24,14 +24,11 @@ jobs:
           cd ..
 
       - name: Download JP 32 & 64 Bits
-        run: |
-          python googleplay-api/downloader.py -e magireco329@gmail.com -p pnnjqvnzvklptwet -r JP -t 32
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
+        run: python googleplay-api/downloader.py -e magireco329@gmail.com -p pnnjqvnzvklptwet -r JP -t 32
+          
 
       - name: Download NA 32 Bits
-        run: |
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
+        run: python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
 
       - name: Commit & push changes to branch NA
         uses: actions-js/push@master
