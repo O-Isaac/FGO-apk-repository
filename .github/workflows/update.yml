@@ -33,12 +33,30 @@ jobs:
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
 
-      - name: Upload Apk as artifacts
+      - name: Create com.aniplex.fategrandorder.arm64-v8a.apk Artifac
         uses: actions/upload-artifact@v2
         with:
-          name: apks
+          name: com.aniplex.fategrandorder.arm64-v8a.apk
           path: |
             com.aniplex.fategrandorder.arm64-v8a.apk
+            
+      - name: Create com.aniplex.fategrandorder.armeabi-v7a.apk Artifac
+        uses: actions/upload-artifact@v2
+        with:
+          name: com.aniplex.fategrandorder.armeabi-v7a.apk
+          path: |
             com.aniplex.fategrandorder.armeabi-v7a.apk
+            
+      - name: Create com.aniplex.fategrandorder.en.arm64-v8a.apk Artifac
+        uses: actions/upload-artifact@v2
+        with:
+          name: com.aniplex.fategrandorder.en.arm64-v8a.apk
+          path: |
             com.aniplex.fategrandorder.en.arm64-v8a.apk
+
+      - name: Create com.aniplex.fategrandorder.en.armeabi-v7a.apk Artifac
+        uses: actions/upload-artifact@v2
+        with:
+          name: com.aniplex.fategrandorder.en.armeabi-v7a.apk
+          path: |
             com.aniplex.fategrandorder.en.armeabi-v7a.apk
