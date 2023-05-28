@@ -18,9 +18,6 @@ jobs:
 
       - name: Install Pre Requeriments
         run: bash depencencies.bash
-      
-      - name: Install Requeriments
-        run: pip install -r googleplay-api/requirements.txt
 
       - name: Build GooglePlay-Api
         run: |
@@ -29,14 +26,20 @@ jobs:
           cd ..
 
       - name: Download JP 32 & 64 Bits
+        env:
+          GEMAIL: ${{ secrets.GPLAY_EMAIL }}
+          GPASS: ${{ secrets.GPLAY_PASS }}
         run: |
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
+          python googleplay-api/downloader.py -r JP -t 32
+          python googleplay-api/downloader.py -r JP -t 64
 
       - name: Download NA 32 Bits
-        run: | 
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
+        env:
+          GEMAIL: ${{ secrets.GPLAY_EMAIL }}
+          GPASS: ${{ secrets.GPLAY_PASS }}
+        run: |
+          python googleplay-api/downloader.py -r NA -t 32
+          python googleplay-api/downloader.py -r NA -t 64
 
       - name: Commit & push changes to branch NA
         uses: actions-js/push@master
