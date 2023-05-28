@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Gettings files from Repo
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Install Pre Requeriments
         run: bash depencencies.bash
@@ -27,19 +25,14 @@ jobs:
 
       - name: Download JP 32 & 64 Bits
         env:
-          GEMAIL: ${{ secrets.GPLAY_EMAIL }}
-          GPASS: ${{ secrets.GPLAY_PASS }}
         run: |
-          python googleplay-api/downloader.py -r JP -t 32
-          python googleplay-api/downloader.py -r JP -t 64
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
 
       - name: Download NA 32 Bits
-        env:
-          GEMAIL: ${{ secrets.GPLAY_EMAIL }}
-          GPASS: ${{ secrets.GPLAY_PASS }}
         run: |
-          python googleplay-api/downloader.py -r NA -t 32
-          python googleplay-api/downloader.py -r NA -t 64
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
+          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
 
       - name: Commit & push changes to branch NA
         uses: actions-js/push@master
