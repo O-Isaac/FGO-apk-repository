@@ -22,6 +22,9 @@ jobs:
       - name: Install Requeriments
         run: pip install -r googleplay-api/requirements.txt
 
+      - name: Build GooglePlay-Api
+        run: python googleplay-api/setup.py build
+        
       - name: Download JP 32 Bits
         run: python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
         
