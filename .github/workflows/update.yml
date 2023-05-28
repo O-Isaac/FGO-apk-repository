@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Pre Requeriments
-        run: bash depencencies.bash
+        run: bash dependencies.bash
 
       - name: Build GooglePlay-Api
         run: |
@@ -24,12 +24,12 @@ jobs:
           cd ..
 
       - name: Download JP 32 & 64 Bits
-        run: | 
+        run: |
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
 
       - name: Download NA 32 & 64 Bits
-        run: | 
+        run: |
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
           python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
 
@@ -39,14 +39,14 @@ jobs:
           name: com.aniplex.fategrandorder.arm64-v8a.apk
           path: |
             com.aniplex.fategrandorder.arm64-v8a.apk
-            
+
       - name: Create com.aniplex.fategrandorder.armeabi-v7a.apk Artifac
         uses: actions/upload-artifact@v2
         with:
           name: com.aniplex.fategrandorder.armeabi-v7a.apk
           path: |
             com.aniplex.fategrandorder.armeabi-v7a.apk
-            
+
       - name: Create com.aniplex.fategrandorder.en.arm64-v8a.apk Artifac
         uses: actions/upload-artifact@v2
         with:
