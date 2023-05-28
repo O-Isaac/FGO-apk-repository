@@ -31,7 +31,7 @@ def main():
    server = GooglePlayAPI(locale="en_US", timezone="UTC", device_codename=codename)
 
    print("[+] Logging in...")
-   server.login(email=email, password=password)
+   server.login(email="magireco329@gmail.com", password="pnnjqvnzvklptwet")
 
    print(f"[+] Downloading {packageName} - {arch}")
    fl = server.download(packageName)
