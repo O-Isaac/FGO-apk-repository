@@ -5,9 +5,9 @@ import platform
 
 def subprocess_log(process):
     if process.returncode == 1:
-        print(process.stderr)
+        print(process.stderr.decode("utf-8"))
     else:
-        print(process.stdout)
+        print(process.stdout.decode("utf-8"))
 
 
 def install_protoc_linux():
