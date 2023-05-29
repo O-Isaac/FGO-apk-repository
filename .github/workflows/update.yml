@@ -38,8 +38,9 @@ jobs:
 
       - name: Download JP 32 & 64 Bits
         run: |
-          python libs/googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r {{ inputs.region }} -t 32
-          python libs/googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r {{ inputs.region }} -t 64
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+          python libs/googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r ${{ inputs.region }} -t 32
+          python libs/googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r ${{ inputs.region }} -t 64
           
       - name: Upload apk as artifacts
         uses: nanoufo/action-upload-artifacts-and-release-assets@v1.8
