@@ -2,61 +2,48 @@ name: Downloading Latest APK
 
 on:
   workflow_dispatch:
-
+    inputs:
+      region:
+        description: "Game server region"
+        default: "JP"
+        type: choice
+        required: true
+        options:
+          - "JP"
+          - "NA"
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.10.4]
 
     steps:
-      - name: Gettings files from Repo
+      - name: Getting files from Repo
         uses: actions/checkout@v2
 
-      - name: Install Pre Requeriments
-        run: bash dependencies.bash
+      - name: Install protoc
+        run: python install_protoc.py
+
+      - name: Install GooglePlay-Api depends & reinstall protobuf
+        run: |
+          pip install -r libs/googleplay-api/requirements.txt
+          pip install --force-reinstall protobuf
 
       - name: Build GooglePlay-Api
         run: |
-          cd googleplay-api
+          cd libs/googleplay-api
           python setup.py build
-          cd ..
+          cd ../../
 
       - name: Download JP 32 & 64 Bits
         run: |
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 32
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r JP -t 64
-
-      - name: Download NA 32 & 64 Bits
-        run: |
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 32
-          python googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r NA -t 64
-
-      - name: Create com.aniplex.fategrandorder.arm64-v8a.apk Artifac
-        uses: actions/upload-artifact@v2
+          python libs/googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r {{ inputs.region }} -t 32
+          python libs/googleplay-api/downloader.py -e ${{ secrets.GPLAY_EMAIL }} -p ${{ secrets.GPLAY_PASS }} -r {{ inputs.region }} -t 64
+          
+      - name: Upload apk as artifacts
+        uses: nanoufo/action-upload-artifacts-and-release-assets@v1.8
         with:
-          name: com.aniplex.fategrandorder.arm64-v8a.apk
+          if-no-files-found: "error"
           path: |
-            com.aniplex.fategrandorder.arm64-v8a.apk
-
-      - name: Create com.aniplex.fategrandorder.armeabi-v7a.apk Artifac
-        uses: actions/upload-artifact@v2
-        with:
-          name: com.aniplex.fategrandorder.armeabi-v7a.apk
-          path: |
-            com.aniplex.fategrandorder.armeabi-v7a.apk
-
-      - name: Create com.aniplex.fategrandorder.en.arm64-v8a.apk Artifac
-        uses: actions/upload-artifact@v2
-        with:
-          name: com.aniplex.fategrandorder.en.arm64-v8a.apk
-          path: |
-            com.aniplex.fategrandorder.en.arm64-v8a.apk
-
-      - name: Create com.aniplex.fategrandorder.en.armeabi-v7a.apk Artifac
-        uses: actions/upload-artifact@v2
-        with:
-          name: com.aniplex.fategrandorder.en.armeabi-v7a.apk
-          path: |
-            com.aniplex.fategrandorder.en.armeabi-v7a.apk
+            *.apk
