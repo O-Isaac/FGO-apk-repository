@@ -5,7 +5,7 @@ import platform
 
 def subprocess_log(process):
     if process.returncode == 1:
-        print(process.stderr.decode("utf-8"))
+        print(process.stderr)
     else:
         print(process.stdout.decode("utf-8"))
 
