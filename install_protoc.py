@@ -29,10 +29,8 @@ def install_protoc_linux():
 
 def install_protoc_windows():
     choco_version = subprocess.run("choco --version", shell=True, capture_output=True)
-
     if choco_version.returncode == 0:
-        choco_output = subprocess.run("choco install protoc", shell=True, capture_output=True)
-        subprocess_log(choco_output)
+        subprocess.run("choco install protoc", shell=True, capture_output=True)
     else:
         print("[!] Chocolatey is not installed in system please go to https://chocolatey.org/install.")
 
