@@ -5,9 +5,9 @@ import platform
 
 def subprocess_log(process):
     if process.returncode == 1:
-        print(process.stderr)
+        print(process.stderr.decode("utf-8"))
     else:
-        print(process.stdout)
+        print(process.stdout.decode("utf-8"))
 
 
 def install_protoc_linux():
@@ -29,8 +29,10 @@ def install_protoc_linux():
 
 def install_protoc_windows():
     choco_version = subprocess.run("choco --version", shell=True, capture_output=True)
+
     if choco_version.returncode == 0:
-        subprocess.run("choco install protoc", shell=True, capture_output=True)
+        choco_output = subprocess.run("choco install protoc", shell=True, capture_output=True)
+        subprocess_log(choco_output)
     else:
         print("[!] Chocolatey is not installed in system please go to https://chocolatey.org/install.")
 
@@ -38,12 +40,12 @@ def install_protoc_windows():
 def main():
     o_system = platform.system()
 
-    print("[📦] Installing protoc")
+    print("[+] Installing protoc")
     if o_system == "Linux":
         install_protoc_linux()
     else:
         install_protoc_windows()
-    print("[📦] protoc successfully installed.")
+    print("[+] protoc successfully installed.")
 
 
 if __name__ == "__main__":
