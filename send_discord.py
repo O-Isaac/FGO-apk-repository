@@ -13,7 +13,8 @@ def main():
     for apk in apks:
         with open(apk, 'rb') as file:
             data = {f'{apk.replace("./", "")}': file}
-            requests.post(discord, files=data)
+            response = requests.post(discord, files=data)
+            print(response.text)
 
 if __name__ == "__main__":
     main()
