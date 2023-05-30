@@ -47,3 +47,5 @@ jobs:
           if-no-files-found: "error"
           path: |
             *.apk
+      - name: Send files to Discord
+        run: python send_discord.py --discord ${{ secrets.WEBHOOK_URL }}
