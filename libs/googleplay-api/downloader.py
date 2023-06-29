@@ -21,14 +21,16 @@ def main():
       codename = "cwv88s"
       arch="armeabi-v7a"
        
-
+   print("[+] Setting up configs")
+   
    if region == "JP":
       packageName = "com.aniplex.fategrandorder"
+      server = GooglePlayAPI(locale="ja_JP", timezone="JST", device_codename=codename)
    else:
       packageName = "com.aniplex.fategrandorder.en"
+      server = GooglePlayAPI(locale="en_US", timezone="UTC", device_codename=codename)
 
-   print("[+] Setting up configs")
-   server = GooglePlayAPI(locale="en_US", timezone="UTC", device_codename=codename)
+   
 
    print("[+] Logging in...")
    server.login(email=email, password=password)
