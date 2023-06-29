@@ -15,7 +15,7 @@ def main():
    email = args.email
    
    if type == "64":
-      codename = "cloudbook"
+      codename = "bbb100"
       arch="arm64-v8a"
    else:
       codename = "cwv88s"
